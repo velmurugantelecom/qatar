@@ -1,0 +1,231 @@
+<ul class="breadcrumb my-auto">
+    <li>
+        <a routerLink="/User/dashboard">
+            <mat-icon class="custom-cursor">
+                home
+            </mat-icon>
+        </a>
+    </li>
+    <li><a class="custom-cursor" (click)="policyPage()">{{ 'PolicyDetails' | translate }}</a></li>
+    <li><a class="custom-cursor" (click)="customer360()">{{navParams.policyNo}}</a></li>
+    <li>{{ 'ReportLoss' | translate }}</li>
+</ul>
+<app-claimdetails></app-claimdetails>
+<form [formGroup]="ReportaLoss" focusInvalidInput>
+    <mat-card class="m-3" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
+        <div class="row">
+            <div class="col-md-6 col-12">
+                <p><strong>{{ 'FNOLHeading' | translate }}</strong></p>
+                <div class="row p-0">
+                    <div class="col-md-6 col-12">
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{ 'LossDateLabel' | translate }}</mat-label>
+                            <input matInput placeholder="{{ 'PlaceHolder.LossDate' | translate }}"
+                                formControlName="lossDate" required [owlDateTime]="lossDateDp"
+                                [owlDateTimeTrigger]="lossDateDp" [min]="minLossDate" [max]="maxLossDate"
+                                AutoDateFormat>
+                            <owl-date-time [pickerType]="'calendar'" [startView]="'multi-years'" #lossDateDp>
+                            </owl-date-time>
+                            <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="lossDateDp">date_range
+                            </mat-icon>
+                            <mat-error *ngIf="ReportaLoss.controls.lossDate.hasError('owlDateTimeParse')">
+                                {{ 'InvalidDate' | translate }}
+                            </mat-error>
+                            <mat-error *ngIf="ReportaLoss.controls.lossDate.hasError('required')">
+                                {{ 'Required.LossDate' | translate }}</mat-error>
+                            <mat-error *ngIf="ReportaLoss.controls.lossDate.hasError('owlDateTimeMin')">
+                                {{ 'Invalid.MinLossDate' | translate }}
+                            </mat-error>
+                            <mat-error *ngIf="ReportaLoss.controls.lossDate.hasError('owlDateTimeMax') ">
+                                {{ 'Invalid.MaxLossDate' | translate }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-6 col-12">
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{ 'IntimatedDateLabel' | translate }}</mat-label>
+                            <input matInput [min]="minIntimatedDate" [max]="maxIntimatedDate" [owlDateTime]="effDateDp"
+                                [owlDateTimeTrigger]="effDateDp"
+                                placeholder="{{ 'PlaceHolder.IntimatedDate' | translate }}"
+                                formControlName="intimatedDate" required AutoDateFormat>
+                            <owl-date-time [pickerType]="'calendar'" [startView]="'multi-years'" #effDateDp>
+                            </owl-date-time>
+                            <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="effDateDp">date_range
+                            </mat-icon>
+                            <mat-error *ngIf="ReportaLoss.controls.intimatedDate.hasError('owlDateTimeParse')">
+                                {{ 'InvalidDate' | translate }}
+                            </mat-error>
+                            <mat-error *ngIf="ReportaLoss.controls.intimatedDate.hasError('required')">
+                                {{ 'Required.IntimatedDate' | translate }}</mat-error>
+
+                            <mat-error *ngIf="ReportaLoss.controls.intimatedDate.hasError('owlDateTimeMin')">
+                                {{ 'Invalid.MinIntimatedDate' | translate }}
+                            </mat-error>
+                            <mat-error *ngIf="ReportaLoss.controls.intimatedDate.hasError('owlDateTimeMax') ">
+                                {{ 'Invalid.MaxIntimatedDate' | translate }}
+                            </mat-error>
+
+                        </mat-form-field>
+
+                    </div>
+                </div>
+                <div class="row p-0">
+                    <div class="col-md-6 col-12">
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{ 'AccidentLocationLabel' | translate }}</mat-label>
+                            <mat-select formControlName="lossLocation" required>
+                                <mat-option *ngFor="let opt of options.vehicleInspection" [value]="opt.value">
+                                    {{ opt.label }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="ReportaLoss.get('lossLocation').invalid">
+                                {{ 'Required.AccidentLocation' | translate }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-2 col-12" *ngIf ="language == 'en'">
+                        <mat-form-field appearance="outline">
+                            <mat-select formControlName="contactPersonPhoneCode">
+                                <mat-option *ngFor="let code of options.contactPersonPhoneCode" [value]="code.value">
+                                    {{ code.label}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div> 
+                    <div class="col-md-4 col-12">
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{ 'MobileNo' | translate }}</mat-label>
+                            <input matInput formControlName="contactPersonPhoneNo" required maxlength="7" NumbersOnly>
+                            <mat-error
+                                *ngIf="formCtrls.contactPersonPhoneNo.errors && formCtrls.contactPersonPhoneNo.errors.required">
+                                {{ 'Required.MobileNumberRequired' | translate }}</mat-error>
+                            <mat-error
+                                *ngIf="formCtrls.contactPersonPhoneNo.errors && formCtrls.contactPersonPhoneNo.errors.pattern">
+                                {{ 'NumberOnly' | translate }}
+                            </mat-error>
+                            <mat-error
+                                *ngIf="formCtrls.contactPersonPhoneNo.errors && formCtrls.contactPersonPhoneNo.errors.minlength">
+                                {{ 'MobileNoLength' | translate }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-2 col-12" *ngIf ="language == 'ar'">
+                        <mat-form-field appearance="outline">
+                            <mat-select formControlName="contactPersonPhoneCode">
+                                <mat-option *ngFor="let code of options.contactPersonPhoneCode" [value]="code.value">
+                                    {{ code.label}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div> 
+                </div>
+                <div class="row p-0">
+                    <div class="col-md-6 col-12">
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{ 'PoliceReportNoLabel' | translate }}</mat-label>
+                            <input matInput formControlName="policeReportNo" required>
+                            <mat-error *ngIf="ReportaLoss.get('policeReportNo').invalid">
+                                {{ 'Required.PoliceReportNo' | translate }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <!-- <mat-form-field appearance="outline">
+                            <mat-label>{{ 'PoliceStationLabel' | translate }}</mat-label>
+                            <input matInput formControlName="policeStation" required>
+                            <mat-error *ngIf="ReportaLoss.get('policeStation').invalid">
+                                {{ 'Required.PoliceStation' | translate }}
+                            </mat-error>
+                        </mat-form-field> -->
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{ 'PoliceStationLabel' | translate }}</mat-label>
+                            <mat-select formControlName="policeStation" required>
+                            <mat-option *ngFor="let opt of options.policeStation" [value]="opt.value">
+                                    {{ opt.label }}
+                                </mat-option> 
+                            </mat-select>
+                            <mat-error *ngIf="ReportaLoss.get('policeStation').invalid">
+                                {{ 'Required.PoliceStation' | translate }}
+                            </mat-error>
+                            
+                            
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-12 col-12 p-0">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'LossDescriptionLabel' | translate }}</mat-label>
+                        <textarea matInput rows="5" formControlName="lossDescription" required></textarea>
+                        <mat-error *ngIf="ReportaLoss.get('lossDescription').invalid">
+                            {{ 'Required.LossDescription' | translate }}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-12 col-12 p-0">
+                    <label class="row pl-3">{{ 'AtFault' | translate }} *</label>
+                    <mat-radio-group formControlName="atFault" required (change)="selectOption()">
+                        <mat-radio-button class="m-1" value="Y">{{ 'Yes' | translate }}</mat-radio-button>
+                        <mat-radio-button class="m-1" value="N">{{ 'No' | translate }}</mat-radio-button>
+                    </mat-radio-group>
+                    <div *ngIf="radioError">
+                        <mat-error>{{'AtFault'| translate}} {{'IsRequired' | translate }}</mat-error>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-md-6 col-12">
+                <div>
+                    <p class="mb-0">{{ 'DocUpload' | translate }}
+                    </p>
+                    <div class="row pl-1 mt-4" *ngFor="let file of fileContainer;index as i">
+                        <div (click)="openDialog(file.doctypeid,i,file.docDesc)" class="p-0 m-0">
+                            <img *ngIf ="language == 'en'" style="object-fit: cover;" src="./assets/scan-upload.png" />
+                            <img *ngIf ="language == 'ar'" style="object-fit: cover;" src="./assets/scan-uploadAr.png" />
+
+                        </div>
+                        <div class="upload-box col-lg-8 col-md-7 col-sm-7 col-xs-7 col-7 p-0 m-0">
+                            <label *ngIf ="language == 'en'" class="upload-label" #tooltip="matTooltip" (click)="tooltip.toggle()"
+                                matTooltip="{{file.docDesc}}" matTooltipPosition="above"
+                                aria-label="Button that shows a tooltip">{{file.docDesc | slice:0:20}}<span
+                                    *ngIf="file.docDesc.length>20">...</span></label>
+                            <label *ngIf ="language == 'ar'" class="upload-label" #tooltip="matTooltip" (click)="tooltip.toggle()"
+                                    matTooltip="{{file.docDescAr}}" matTooltipPosition="above"
+                                    aria-label="Button that shows a tooltip">{{file.docDescAr | slice:0:20}}<span
+                                        *ngIf="file.docDescAr.length>20">...</span></label>
+                            <div class="upload-btn-wrapper">
+                                <label class="placeFont mb-0 blue-font" #tooltip="matTooltip"
+                                    matTooltip="{{file.value}}"
+                                    (click)="openAttachment(file)">{{file.value | slice:0:20}}<span
+                                        *ngIf="file.value.length>20">...</span></label>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 col-3 p-0 m-0">
+                            <img *ngIf ="language == 'en'" style="object-fit: cover;border-left: 1px solid white;"
+                                src="./assets/file-upload.png" />
+                            <img *ngIf ="language == 'ar'" style="object-fit: cover;border-left: 1px solid white;"
+                                src="./assets/file-uploadAr.png" class="img-fluid " />
+                            <div class="upload-btn-wrapper2">
+                                <input type="file" (click)="clearFileElement()"
+                                    (change)="selectFile($event ,file.doctypeid,i,file.docDesc)" #uploadTrigger
+                                    accept="image/*, .pdf" id="fileUpload" multiple/>
+                            </div>
+                        </div>
+                        <p style="margin-top:2px" class="placeFont mb-0">{{ 'UplodadDisclaimer'| translate}}
+                        </p>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </mat-card>
+    <div class="d-flex justify-content-end mr-5">
+        <button type="submit" class="searchBtn m-2" (click)="onsubmit()">{{ 'Submit' | translate }}</button>
+        <button (click)="customer360()" class="searchBtn m-2">{{ 'Cancel' | translate }}</button>
+    </div>
+</form>

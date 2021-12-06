@@ -1,0 +1,206 @@
+::ng-deep .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value {
+    background-color: #01785a !important;
+    color: white;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 78vh;
+    justify-content: center;
+    width: 100%;
+}
+
+.custom-bg {
+    background-image: linear-gradient(to right, #58bb8b 40%, #6fe289);
+    margin: 8px;
+    height: 40px;
+    padding: 10px;
+    border-radius: 25px;
+}
+
+.enborderblock {
+    border-right-style: solid;
+    border-right-color: lightgrey;
+    border-right-width: medium;
+}
+
+.arborderblock {
+    border-left-style: solid;
+    border-left-color: lightgrey;
+    border-left-width: medium;
+}
+
+ng-value-icon {
+    display: hidden !important;
+}
+
+.custom {
+    margin-top: 5px;
+}
+
+.comp-header {
+    background: #01785a 0% 0% no-repeat padding-box;
+    border-radius: 100px;
+    opacity: 1;
+    text-align: center;
+}
+
+.horizontal-line {
+    border: 2px solid #01785a;
+}
+
+.zero-pad {
+    padding: 0px;
+}
+
+.label-pad {
+    padding-top: 4%;
+}
+
+.fw900 {
+    font-weight: 900;
+}
+
+.mat-card {
+    padding: 8px;
+}
+
+::ng-deep .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value .ng-value-label {
+    display: inline-block;
+    padding: 4px 15px;
+    height: 25px;
+}
+
+::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items {
+    display: block;
+    height: auto;
+    box-sizing: border-box;
+    max-height: 170px !important;
+    overflow-y: auto;
+}
+
+// Scroll table
+tbody {
+    display: block;
+    max-height: 130px !important;
+    min-height: 45px !important;
+    overflow: auto;
+}
+
+thead,
+tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+thead {
+    width: calc(100% - 1em);
+}
+
+.mat-drawer-container {
+    background-color: white;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.tansformToUpper {
+    text-transform: uppercase;
+}
+
+
+/* Tooltip container */
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+    /* If you want dots under the hoverable text */
+}
+
+
+/* Tooltip text */
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+
+/* Tooltip arrow */
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+
+/* Show the tooltip text when you mouse over the tooltip container */
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.btnFont {
+    font-size: 6px;
+}
+
+mat-error+mat-error {
+    display: none;
+}
+
+.search-btn {
+    border-radius: 50%;
+    background-color: #26715e;
+    text-align: center;
+}
+
+::ng-deep .reading-block {
+    position: absolute;
+    font-size: 15px;
+    width: 100%;
+    font-weight: 400;
+    white-space: nowrap;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media only screen and (max-width: 992px) {
+    .vehicle-value-center {
+        text-align: center;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .vehicle-value-center {
+        text-align: center;
+    }
+}
+
+@media only screen and (max-width: 1024) {
+    .vehicle-value-center {
+        text-align: center;
+    }
+}

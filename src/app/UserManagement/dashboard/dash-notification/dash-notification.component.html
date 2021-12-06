@@ -1,0 +1,152 @@
+<div class="card BoxShadow">
+    <div class="accordion" id="accordionExample">
+        <mat-accordion>
+            <mat-expansion-panel [expanded]="true">
+                <mat-expansion-panel-header>
+                    <div class="d-flex justify-content-between">
+                        <div class=" " style="padding: 10px 10px;">
+                            <span class="L2Black poppins-med-20 f18">{{ 'Dashboard' | translate }} {{notificationCount}} </span>
+                        </div>
+                    </div>
+                </mat-expansion-panel-header>
+
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div>
+                        <div class="row m-0 justify-content-between d-none d-lg-block d-xl-block">
+                            <div class="row">
+                                <div class="mt-2 BadgeSpan f16" [ngClass]="{'Active': activeQuotes==='Policy'}" (click)="fetchData('Policy')">
+                                    <img src="assets/dashboard/renewalactive-icon.png" *ngIf="activeQuotes==='Policy'" style="height:24px;width:24px;">
+                                    <img src="assets/dashboard/renewal-icon.png" *ngIf="activeQuotes !=='Policy'" style="height:24px;width:24px;"> {{ 'Policy' | translate }} {{renewalCount}}
+                                </div>
+                                <div class="mt-2 BadgeSpan f16" [ngClass]="{'Active': activeQuotes==='Quotes'}" (click)="fetchData('Quotes')">
+                                    <img src="assets/dashboard/quotesactive-icon.png" *ngIf="activeQuotes==='Quotes'" style="height:24px;width:24px;">
+                                    <img src="assets/dashboard/quotes-icon.png" *ngIf="activeQuotes !=='Quotes'" style="height:24px;width:24px;"> {{ 'Quotes' | translate }} {{quoteCount}}
+                                </div>
+                            </div>
+                            <div class=" d-flex justify-content-end mt-2">
+                                <button style="font-size: 16px;" *ngIf="activeQuotes==='Quotes'" (click)="NewQuote()" type="button" class=" btn btn-default  bgblue fwhite button roundedbtn">
+                      {{ 'NewQuote' | translate }}
+                    </button>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-12  d-none d-lg-block d-xl-block" style="margin-top:20px;display:inline-block;padding:0px;" *ngIf="totalRecords!=0">
+                            <table class="table" mat-table [dataSource]="dataSource" matSort>
+
+                                <ng-container class="poppins-light-15" [matColumnDef]="column" *ngFor="let column of displayedColumns">
+                                    <tr>
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-bottom: 15px;">
+                                            <span *ngIf="column=='refNo'  || column=='policyNo' ">{{ 'PolicyNo' | translate }} </span>
+
+                                            <span class="d-none d-sm-none d-md-block d-lg-block d-xl-block" *ngIf="column=='insuredName'">{{ 'InsuredNameLabel' | translate }}</span>
+                                            <span class="d-none d-sm-none d-md-block d-lg-block d-xl-block" *ngIf="column=='quoteNo' && tableType === 'Policy Details'">{{ 'Quote' | translate }}</span>
+                                            <span *ngIf="column=='quoteNo' && tableType === 'Quote Details'">{{ 'Quote' | translate }}</span>
+
+                                            <span class="d-none d-sm-none d-md-block d-lg-block d-xl-block" *ngIf="column=='emailId'">{{ 'EmailAddress' | translate }}</span>
+                                            <span class="d-none d-sm-block" *ngIf="column=='product'">{{ 'Product' | translate }}</span>
+                                            <span class="d-none d-sm-block" *ngIf="column=='status'">{{ 'Status' | translate }}</span>
+                                            <span class="d-none d-sm-none d-md-none d-lg-block d-xl-block" *ngIf="column=='endDate'">{{ 'EndDate' | translate }}</span>
+                                            <span class="d-none d-sm-none d-md-none d-lg-block d-xl-block" *ngIf="column=='dueDate'">{{ 'DueDate' | translate }}</span>
+                                            <span *ngIf="column=='amount'">{{ 'Amount' | translate }}</span>
+                                            <span class="d-none d-sm-none d-md-none d-lg-block d-xl-block" *ngIf="column=='startDate'">{{ 'StartDate' | translate }}</span>
+
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td mat-cell *matCellDef="let element;" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
+                                            <span class="d-none d-sm-block" *ngIf=" column!='emailId' && column!='insuredName' && column!='quoteNo' && column!='policyNo' && column!=='refNo' && column!=='endDate' && column!=='startDate' &&  column!=='dueDate' && column!=='amount'">{{element[column]}}</span>
+                                            <span class="d-none d-sm-none d-md-block d-lg-block d-xl-block" *ngIf=" column==='emailId' ">{{element[column]}}</span>
+                                            <span class="d-none d-sm-none d-md-block d-lg-block d-xl-block" *ngIf=" column==='insuredName' ">{{element[column]}}</span>
+
+                                            <span class=" hyperlink-click" *ngIf="column=='quoteNo' && activeQuotes=='Quotes' || column=='quoteNo' && activeQuotes=='Renewal'" (click)="showDetails(element)">
+                        {{element[column]}}</span>
+                                            <span class="d-none d-sm-none d-md-block d-lg-block d-xl-block" *ngIf="column=='quoteNo' && activeQuotes!='Quotes' && activeQuotes!='Renewal'" (click)="showDetails(element)">
+                          {{element[column]}}</span>
+
+                                            <span class=" hyperlink-click" *ngIf="column=='policyNo'" (click)="navpage(element)">
+                        {{element['policyNo']}}</span>
+
+                                            <span *ngIf="column=='QuoteNo'">
+                        {{element['quoteNo']}}</span>
+
+                                            <span *ngIf="column=='refNo'"> {{element[column]}}</span>
+                                            <span class="d-none d-sm-none d-md-none d-lg-block d-xl-block" *ngIf="column=='dueDate' || column=='endDate' || column=='startDate'">{{element[column] | date:runtimeConfigService.config.DisplayingDateFormat}}</span>
+
+                                            <span *ngIf="column=='amount'">{{ 'AED' | translate }}
+                        {{element[column] }}</span>
+                                            <span (click)="showBottomSheet(element)" *ngIf="column==='eye' && tableType==='Policy Details'" class="d-block d-sm-block d-md-block d-lg-none"><mat-icon >remove_red_eye</mat-icon></span>
+                                            <span (click)="showBottomSheet(element)" *ngIf="column==='eye' && tableType==='Quote Details'" class="d-block d-sm-block d-md-none d-lg-none"><mat-icon >remove_red_eye</mat-icon></span>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+
+                                <tr class="poppins-reg-15 opa8" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr class="poppins-reg-15 opa8" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                            <mat-paginator [length]="totalRecords" [pageSize]="5" (page)="pageEvent = $event; onPaginateChange($event)" showFirstLastButtons>
+                            </mat-paginator>
+
+                        </div>
+                        <div class="col-md-12 d-block d-sm-block d-md-block d-lg-none" style="margin-top:20px;display:inline-block;padding:0px;">
+                            <div>
+                                <mat-tab-group (selectedTabChange)="onTabChanged($event);" [selectedIndex]="selectedIndex">
+                                    <mat-tab label="Policy">
+                                        <div *ngIf="mobDataSource['typeOfData']=== 'policy'" class="row m-0 p-0">
+                                            <div *ngFor="let product of mobDataSource.data" class="col-md-6 col-sm-12 col-12 p-0 m-0">
+                                                <mat-card class="doc-card mt-2  ml-2">
+                                                    <div class="row mb-4 m-0 p-0">
+                                                        <div class="col-5 card-label p-0">{{'PolicyNo' | translate}}</div>
+                                                        <div class="col-7 p-0 card-value hyperlink-click " (click)="navpage(product)">{{ product.policyNo}}</div>
+                                                    </div>
+                                                    <div class="row m-0 p-0">
+                                                        <div class="col-5 card-label p-0">{{'EndDate' | translate }}</div>
+                                                        <div class="col-7 p-0 card-value">{{ product.endDate | date:runtimeConfigService.config.DisplayingDateFormat}}</div>
+                                                    </div>
+                                                </mat-card>
+                                            </div>
+                                        </div>
+                                        <div class=" f12" *ngIf="totalRecords==0" style="color: rgba(0, 0, 0, 0.54);">
+                                            {{'NoRecordFound' | translate }}
+                                        </div>
+                                        <mat-paginator [length]="totalRecords" [pageSize]="5" (page)="pageEvent = $event; onPaginateChange($event)" showFirstLastButtons>
+                                        </mat-paginator>
+                                    </mat-tab>
+                                    <mat-tab label="Quote">
+                                        <div class="d-flex justify-content-end m-2" *ngIf="activeQuotes==='Quotes'">
+                                            <button style="font-size: 16px;" (click)="NewQuote()" type="button" class="d-block d-sm-block d-md-block d-lg-none btn btn-default  bgblue fwhite button roundedbtn">
+                                            {{ 'NewQuote' | translate }}
+                                          </button>
+                                        </div>
+                                        <div *ngIf="mobDataSource['typeOfData']=== 'quote'" class="row m-0 p-0">
+                                            <div class="col-md-6 col-sm-12 col-12 p-0" *ngFor="let product of mobDataSource.data">
+                                                <mat-card class=" doc-card mt-2  ml-2">
+                                                    <div class="row mb-4 m-0 p-0">
+                                                        <div class="col-5 card-label p-0">{{ 'QuoteNo' | translate }}</div>
+                                                        <div class="col-7 p-0 card-value hyperlink-click" (click)="showDetails(product)">{{ product.quoteNo}}</div>
+                                                    </div>
+                                                    <div class="row m-0 p-0">
+                                                        <div class="col-5 card-label p-0">{{ 'InsuredNameLabel' | translate }}</div>
+                                                        <div class="col-7 p-0 card-value">{{ product.insuredName}}</div>
+                                                    </div>
+                                                </mat-card>
+                                            </div>
+                                        </div>
+                                        <div class="f12" *ngIf="totalRecords==0" style="color: rgba(0, 0, 0, 0.54);text-align: start;text-align: start;">
+                                            {{'NoRecordFound' | translate }}
+                                        </div>
+                                        <mat-paginator [length]="totalRecords" [pageSize]="5" (page)="pageEvent = $event; onPaginateChange($event)" showFirstLastButtons>
+                                        </mat-paginator>
+                                    </mat-tab>
+                                </mat-tab-group>
+                            </div>
+                        </div>
+                        <div class=" f12 d-none d-lg-block d-xl-block" *ngIf="totalRecords==0" style="color: rgba(0, 0, 0, 0.54);text-align: start;">
+                            {{'NoRecordFound' | translate }}
+                        </div>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</div>

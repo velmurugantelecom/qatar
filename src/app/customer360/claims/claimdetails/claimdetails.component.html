@@ -1,0 +1,33 @@
+<mat-card class="m-5" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
+
+    <div class="row">
+        <div class="col-md-3 col-12 m-0">
+            <label> {{ 'PolicyNoHash' | translate }}</label><br>
+            <b>{{policyarr?.policyNo}}</b>
+        </div>
+
+        <div class="col-md-3  col-12 m-0"  [ngClass]="{enborder :language=='en',arborder :language=='ar'}">
+            <label> {{ 'InsuredNameLabel' | translate }} </label><br>
+            <b>{{policyarr?.userDetails?.fullName}}</b>
+        </div>
+
+        <!-- <div class="col-md-2 borderleft col-12 m-0">
+      <label>Cover Type</label><br>
+      <b>{{policyarr?.product}}</b>
+    </div> -->
+
+        <div class="col-md-3  col-12 m-0"  [ngClass]="{enborder :language=='en',arborder :language=='ar'}">
+            <label>{{ 'Product' | translate }} </label><br>
+            <b>{{productName}}</b>
+        </div>
+
+        <div class="col-md-3  col-12 m-0"  [ngClass]="{enborder :language=='en',arborder :language=='ar'}">
+            <label> {{ 'PolicyPeriod' | translate }}</label><br>
+            <b class="text-center m-0 p-0">{{policyarr?.startDate | date:runtimeConfigService.config.DisplayingDateFormat}} </b><br>
+            <b class="text-center m-0 p-0">{{ 'To' | translate }}</b><br>
+            <b class="text-center m-0 p-0"> {{policyarr?.endDate | date:runtimeConfigService.config.DisplayingDateFormat}}</b>
+        </div>
+
+    </div>
+
+</mat-card>

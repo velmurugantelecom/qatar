@@ -1,0 +1,22 @@
+<div>
+    <div class="row m-0 p-0">
+        <div class="col-md-10 col-9 p-0 mb-1">
+            <i class="fa fa-info-circle fa-3x bg-color d-flex justify-content-center ml-4" aria-hidden="true"></i>
+        </div>
+        <div class="col-md-2 col-3 custom-cursor" mat-dialog-close>
+            <mat-icon>
+                close
+            </mat-icon>
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="col-md-10 col-9 p-0 my-3 centertext">
+        <p>
+            {{ data.body}}
+        </p>
+    </div>
+    <div style="display: flex;justify-content: center;">
+        <button class="btn btn-home button fwhite bggreen centercss mr-4" style="min-width: 75px;" (click)="doCancel()" *ngIf="cancelProcess">{{'No' | translate }}</button>
+        <button mat-dialog-close class="btn btn-home button fwhite bggreen centercss mr-4" style="min-width: 75px;" (click)="doContinue()">{{'Yes' | translate }}</button>
+    </div>
+</div>

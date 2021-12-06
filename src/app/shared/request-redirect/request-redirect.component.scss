@@ -1,0 +1,115 @@
+.img_wrp {
+    display: inline-block;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: red;
+    cursor: pointer;
+}
+
+.img-container {
+    width: 100%;
+}
+
+.mat-dialog-container {
+    display: block;
+    padding: 24px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    overflow: auto;
+    outline: 0;
+    width: 80% !important;
+    height: 76%;
+    min-height: inherit;
+    max-height: inherit;
+}
+
+@media only screen and (max-width: 400px) {
+    .framecss {
+        top: 44%;
+        left: 20%;
+        margin-left: auto;
+        max-width: 100%;
+        margin-right: auto;
+        position: absolute;
+        z-index: 10;
+    }
+}
+
+@media only screen and (min-width: 400px) {
+    .framecss {
+        top: 43%;
+        left: 22%;
+        margin-left: auto;
+        max-width: 100%;
+        margin-right: auto;
+        position: absolute;
+        z-index: 10;
+    }
+    .cropper-container {
+        top: 25px;
+        width: 260px;
+    }
+}
+
+
+/* Medium devices (landscape tablets, 768px and up) */
+
+@media only screen and (min-width: 768px) {
+    .framecss {
+        top: 32%;
+        left: 33%;
+        margin-left: auto;
+        max-width: 100%;
+        margin-right: auto;
+        position: absolute;
+        z-index: 10;
+    }
+    .cropper-container {
+        top: 25px;
+        width: 400px;
+    }
+}
+
+
+/* Large devices (laptops/desktops, 992px and up) */
+
+@media only screen and (min-width: 992px) {
+    .framecss {
+        top: 37%;
+        left: 34%;
+        margin-left: auto;
+        max-width: 100%;
+        margin-right: auto;
+        position: absolute;
+        z-index: 10;
+    }
+    .cropper-container {
+        top: 25px;
+        width: 400px;
+    }
+}
+
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+
+@media only screen and (min-width: 1200px) {
+    .framecss {
+        top: 36%;
+        left: 36.5%;
+        margin-left: auto;
+        max-width: 100%;
+        margin-right: auto;
+        position: absolute;
+        z-index: 10;
+        height: 30%;
+    }
+    .cropper-container {
+        top: 25px;
+        width: 400px;
+    }
+}

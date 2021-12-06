@@ -1,0 +1,268 @@
+// new code
+ul {
+    list-style-type: none;
+    width: 100%;
+    // margin-block-start: 0em;
+    // margin-block-end: 0em;
+    // margin-inline-start: 0px;
+    // margin-inline-end: 0px;
+    padding-inline-start: 0px;
+}
+
+.mat-card {
+    padding: 0px
+}
+
+ol {
+    list-style-type: none;
+}
+
+hr {
+    width: 100%;
+    border-bottom: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.header-text {
+    letter-spacing: 0;
+    color: black;
+    text-shadow: 0px 3px 3px #0000004d;
+    opacity: 1;
+}
+
+.silver-card-header {
+    width: 100%;
+    background: linear-gradient(to right, #007DA4, #05B0E6, #007DA4 100%) // background-image: url('../../assets/compare-plans/blue.jpg');
+}
+
+.silver-card-body {
+    background-color: #DEEBF7;
+    border: 1px solid #5B9BD5;
+}
+
+.platinum-card-header {
+    width: 100%;
+    background: linear-gradient(to right, #CEA95B, #F1D18D, #CEA95B 100%);
+}
+
+.platinum-card-body {
+    background-color: #FFF2CC;
+    border: 1px solid #FFC000;
+}
+
+input[type='radio']:after {
+    width: 20px;
+    height: 20px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: white;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+}
+
+input[type='radio']:checked:after {
+    width: 20px;
+    height: 20px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: #26715e;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+}
+
+.card {
+    border: none;
+}
+
+.enmobilealignment {
+    border-left: 3px solid #ececec;
+}
+
+.armobilealignment {
+    border-right: 3px solid #ececec;
+}
+
+.gold-card-header {
+    width: 100%;
+    background: linear-gradient(to right, #919191, #C4C4C4, #919191 100%)
+}
+
+.gold-card-body {
+    // background-color: #defeca;
+    background-color: #EDEDED;
+    border: 1px solid #A5A5A5;
+}
+
+.silver-card-header-2 {
+    background-color: #00c2d1;
+    width: 100%;
+}
+
+.silver-card-body-2 {
+    background-color: #e2f2f2;
+}
+
+.gold-card-header-2 {
+    background-color: #81d54a;
+    width: 100%;
+}
+
+.gold-card-body-2 {
+    background-color: #defeca;
+}
+
+.platinum-card-header-2 {
+    background-color: #f3c440;
+    width: 100%;
+}
+
+.platinum-card-body-2 {
+    background-color: #fbf0d3;
+}
+
+button:hover {
+    color: white;
+}
+
+.mouse-hover {
+    cursor: pointer;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.actived-plan-bg {
+    background-color: #646464;
+}
+
+.selected-coverage-content {
+    position: relative;
+    color: white;
+    top: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.mat-select {
+    display: inline-block;
+    width: 50%;
+    outline: 0;
+}
+
+// compare plan
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: #f8f9fa;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle,
+.mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple),
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple,
+.mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
+    background-color: #f8f9fa;
+}
+
+.mat-radio-outer-circle {
+    border-color: white;
+}
+
+.mat-card:not([class*="mat-elevation-z"]) {
+    box-shadow: 0px 0px 0px 0px;
+}
+
+.cover-head {
+    font-size: 17px;
+    color: black;
+}
+
+// .plan-container {
+//   overflow-x: scroll;
+//   overflow-y: hidden;
+//   white-space: nowrap;
+// }
+// .card {
+//   display: inline-block;
+// }
+.plan-container {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    .card {
+        flex: 0 0 auto;
+    }
+}
+
+.h35 {
+    height: 35px !important;
+}
+
+.flex-container {
+    display: flex;
+    align-items: stretch;
+    // background-color: #f1f1f1;
+}
+
+.mat-expansion-panel-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 24px;
+    border-radius: inherit;
+    height: 190px !important;
+}
+
+::ng-deep .mat-content {
+    display: block !important;
+    flex: 1;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+.discount-bg {
+    background-color: white;
+    padding: 10px;
+    border: 1px solid #28a745;
+}
+
+.mob-silver-header {
+    background: linear-gradient(to right, #007DA4, #05B0E6, #007DA4 100%) !important;
+    color: white;
+}
+
+.mob-gold-header {
+    background: linear-gradient(to right, #919191, #C4C4C4, #919191 100%) !important;
+}
+
+.mob-platinum-header {
+    background: linear-gradient(to right, #CEA95B, #F1D18D, #CEA95B 100%) !important;
+}
+
+.mob-silver-body {
+    background-color: #DEEBF7;
+}
+
+.mob-gold-body {
+    background-color: #EDEDED;
+}
+
+.mob-platinum-body {
+    background-color: #FFF2CC;
+}
+
+::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: #ff5200;
+}
+
+::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color: #ff5200;
+}

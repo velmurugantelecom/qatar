@@ -1,0 +1,33 @@
+{
+    "Environment": "QC",
+    "heading": "One more step to go, please provide your vehicle details",
+    "headingAr": "خطوة أخرى للانتهاء ، يرجى تقديم تفاصيل سيارتك",
+    "siteKey": "6LdwN24bAAAAAPnsAJds1yo_anfCeR7EBHneewPv",
+    "DevEndpointdbsync": "http://192.168.2.131:24090/bts-portal/api/bts-service/",
+    "DevEndpointAutoData": "http://192.168.2.131:24090/bts-portal/api/tpi-services/",
+    "DevEndpoint": "http://192.168.2.131:24090/bts-portal/api/",
+    "DevEndpoint2": "http://192.168.2.131:24090/bts-portal/api/portal-service/",
+    "PaymentEndpoint": "http://192.168.2.131:8900/payment-service-elig/",
+    "OcrEndpoint": "http://192.168.2.131:24090/bts-portal/api/ocr-service/api/",
+    "GreyImport": "http://192.168.2.131:24090/bts-portal/api/tpi-services/",
+    "enableLanguageChange": true,
+    "PrevPolExpiryDate": 60,
+    "LicenseIssuedDateGreaterThanDOB": 18,
+    "DateOfBirthGreaterThan": 18,
+    "FullInsuranceVehicleAgeGreaterThan": 10,
+    "PolicyStartDateGreaterThan": 30,
+    "InsideAgency": 2,
+    "OutsideAgency": 5,
+    "VehicleDetailsNCDYears": 0,
+    "VehicleValueAdd": 100,
+    "VehicleValueMinus": 100,
+    "DisplayingDateFormat": "dd/MM/yyyy",
+    "DatePickerFormat": "DD/MM/YYYY",
+    "MinFirstRegistrationDate": { "OneYearLessThanMakeYear": true, "PastYear": false },
+    "MaxFirstRegistrationDate": { "TillMakeYear": false, "TillCurrentYear": true, "TillFeatureYear": false },
+    "IdleTimeOut": {
+        "TimeOutIn": 300,
+        "Timer": 2
+    }
+    
+}

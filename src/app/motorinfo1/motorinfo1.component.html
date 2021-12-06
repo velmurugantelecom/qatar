@@ -1,0 +1,559 @@
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div *ngIf ="language == 'en'"  class="curve-btn custom-bg fwhite fbold centercss col-md-3">{{ 'ProductType' | translate }}:
+            {{basicUserDetails?.productTypeName}}
+        </div>
+        <div *ngIf ="language == 'ar'"  class="curve-btn custom-bg fwhite fbold centercss col-md-4">{{ 'ProductType' | translate }}:
+            {{basicUserDetails?.productTypeName}}
+        </div>
+        <!-- <div *ngIf="iconDir === 'ar'" class="curve-btn custom-bg fwhite fbold centercss col-md-3">{{ 'MobileNoLabel' | translate }}: 
+            <div style="direction: ltr;">{{ basicUserDetails?.mobileCode}} - {{basicUserDetails?.mobileNo }}</div>
+        </div> -->
+        <div class="curve-btn custom-bg fwhite fbold centercss col-md-3" *ngIf ="language == 'en'">
+            {{ 'MobileNoLabel' | translate }}: {{basicUserDetails?.mobileCode}} -
+                {{basicUserDetails?.mobileNo}}
+        </div>
+        <div class="curve-btn custom-bg fwhite fbold centercss col-md-3" *ngIf = "language == 'ar'">
+            {{ 'MobileNoLabel' | translate }} : {{basicUserDetails?.mobileNo}} - {{basicUserDetails?.mobileCode}} 
+                
+        </div>
+        <div class="curve-btn custom-bg fwhite fbold centercss col-md-3"> {{ 'EmailLabel' | translate }}:
+            {{basicUserDetails?.email}}</div>
+    </div>
+    <div class="d-flex justify-content-center mt-3 f24">
+        <p>{{'Heading' | translate}}</p>
+    </div>
+    <div class="row d-flex justify-content-center my-2">
+        <div class="col-md-4" [ngClass]="{enborderblock :language=='en',arborderblock :language=='ar'}">
+            <div class="d-flex justify-content-center mb-2">
+                <img src="./assets/new-screen/chassis-blue.png" style="height: 48px;" />
+            </div>
+            <form [formGroup]="chassisNoForm" focusInvalidInput autocomplete="off" class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 col-12">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'SearchByChassisNumber' | translate }}</mat-label>
+                        <input matInput placeholder="{{ 'Required.ChassisNumber' | translate }}"
+                            [AlphaNumericOnly]="true" class="tansformToUpper" autocomplete="off"
+                            formControlName="chassisNo" maxlength="20" (focus)="onEnterChassisField()">
+                        <mat-icon matSuffix color="primary" [ngStyle]="{'font-size':'27px'}" class="custom-cursor"
+                            (click)="getAutoData('chassis')">search</mat-icon>
+                        <mat-hint>{{ 'Required.ChassisNumber' | translate }}</mat-hint>
+                        <mat-error *ngIf="formCtrl.chassisNo.errors && formCtrl.chassisNo.errors.minlength">
+                            {{ 'Required.ChassisNumber' | translate }}
+                        </mat-error>
+                        <mat-error *ngIf="formCtrl.chassisNo.errors && formCtrl.chassisNo.errors.required">
+                            {{ 'Required.ChassisNumberRequired' | translate }}
+                        </mat-error>
+                        <mat-error *ngIf="invalidChassisNo && formCtrl.chassisNo.errors">
+                            {{ 'Invalid.ChassisNumber' | translate}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <!-- <div class="col-md-2 px-0 col-sm-2 col-xs-2 col-2 ">
+                    <button mat-mini-fab color="primary" (click)="getAutoData('')">
+                            <mat-icon [ngStyle]="{'color':'white'}">search</mat-icon>
+                        </button>
+                </div> -->
+            </form>
+
+        </div>
+        <div class="col-md-6">
+            <div class="d-flex justify-content-center" style="margin-bottom: 12px;">
+                <img src="./assets/new-screen/car-blue.png" />
+            </div>
+            <div>
+                <ng-select style=" text-align: center;" bindLabel="label" class="custom"
+                    placeholder="{{ 'SearchbyVehicleDetails' | translate}}" appendTo="body" [(ngModel)]="selected"
+                    [searchable]="true" maxSelectedItems="3" appendTo="body" multiple="true" (clear)="resetDropDown()"
+                    [items]="items" [clearOnBackspace]="false" [isOpen]="openDropDown" (focus)="enableDropDown()"
+                    (blur)="ngSelectBlur()" (remove)="deSelectedItem($event)" (add)="addSelectedItem($event)">
+                    <!-- <ng-option [value]="item" *ngFor="let item of items">
+                        {{item.label}}
+                    </ng-option> -->
+                </ng-select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grid Section -->
+    <div class="row d-flex justify-content-center my-3" *ngIf="!showForm && showGrid">
+        <mat-card class="row col-md-10">
+            <table class="table table-striped">
+                <thead>
+                    <tr style="text-align: center;">
+                        <th> {{ 'ModelLabel' | translate }}</th>
+                        <th class=" d-none d-sm-table-cell"> {{ 'NoofCylinders' | translate }}</th>
+                        <th class=" d-none d-sm-table-cell">{{ 'NoofSeats' | translate }}</th>
+                        <th class=" d-none d-sm-table-cell">{{ 'NoofDoors' | translate }}</th>
+                        <th class=" d-none d-sm-table-cell">{{ 'EngineSize' | translate }}</th>
+                        <th class=" d-none d-sm-table-cell">{{ 'Hp' | translate }}</th>
+                        <th class=" d-none d-sm-table-cell">{{ 'BodyType' | translate }}</th>
+                        <th class=" d-none d-sm-table-cell">{{ 'Transmission' | translate }}</th>
+                        <th> {{ 'Trim' | translate }}</th>
+                        <th class="d-table-cell d-sm-none"></th>
+                        <th> {{ 'SelectOne' | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of autoData;let i = index;trackBy: trackByFn" style="text-align: center;">
+
+                        <td>{{data.model.label}}</td>
+                        <td class="d-none d-sm-table-cell">{{data.noOfCylinders}}</td>
+                        <td class="d-none d-sm-table-cell">{{data.noOfSeats}}</td>
+                        <td class="d-none d-sm-table-cell">{{data.noOfDoors}}</td>
+                        <td class="d-none d-sm-table-cell">{{data.engineSize}}</td>
+                        <td class="d-none d-sm-table-cell">{{data.hp}}</td>
+                        <td class="d-none d-sm-table-cell">{{data.type.label}}</td>
+                        <td class="d-none d-sm-table-cell">{{data.transmission}}</td>
+                        <td #trimValue>{{data.trim}}</td>
+                        <td class="d-table-cell d-sm-none">
+                            <!-- <mat-icon (click)="trimDisplayMobile(i);openBottomSheet()">remove_red_eye
+                            </mat-icon> -->
+                            <i class="fa fa-info-circle" aria-hidden="true"
+                                (click)="trimDisplayMobile(i);openBottomSheet()"></i>
+                        </td>
+                        <td>
+                            <input type="radio" id="{{data.trim}}" name="drone" value="{{i}}"
+                                (change)="trimChanged($event)">
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+            <div class="row d-flex justify-content-center">
+                <button [disabled]="enableGridBtn" (click)="submitGrid()"
+                    class="pr-3 btn button btn-default bggreen fwhite">{{ 'Submit' | translate }}</button>
+            </div>
+        </mat-card>
+    </div>
+
+    <!-- Form Section -->
+    <div class="m-0 p-0" *ngIf="showForm">
+        <!-- Vehicle Section -->
+        <div class="row mx-2 my-2">
+
+            <div class="zero-pad col-md-5 col-sm-4 col-0">
+                <hr class="horizontal-line" />
+            </div>
+            <div class="fwhite  comp-header col-md-2 col-sm-4 col-12">
+                <label class="label-pad f12 fw900">{{ 'VehicleInformation' | translate }}</label>
+            </div>
+            <div class="zero-pad col-md-5 col-sm-4 col-0">
+                <hr class="horizontal-line" />
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <form id="form" [formGroup]="vehicleForm" focusInvalidInput autocomplete="off"
+                class="row col-md-10 col-sm-12 m-0 p-0">
+                <div class="col-md-4 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'ChassisNoLabel' | translate }}</mat-label>
+                        <input matInput placeholder="{{ 'PlaceHolder.ChassisNumber' | translate }}"
+                            formControlName="chassisNo" [AlphaNumericOnly]="true" maxlength="20" class="tansformToUpper"
+                            required appAutofocus>
+                        <mat-error *ngIf="vehicleForm.controls.chassisNo.hasError('required')">
+                            {{ 'Required.ChassisNo' | translate }}
+                        </mat-error>
+                        <mat-error *ngIf="vehicleForm.controls.chassisNo.hasError('minlength')">
+                            {{ 'Required.ChassisNumber' | translate }}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'MakeLabel' | translate }}</mat-label>
+                        <mat-select formControlName="makeId" required>
+                            <mat-option *ngFor="let make of options.make;trackBy: trackByFn" [value]="make.value">
+                                {{make.label}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="vehicleForm.controls.makeId.hasError('required')">
+                            {{ 'Required.Make' | translate }}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'ModelLabel' | translate }}</mat-label>
+                        <mat-select formControlName="modelId" required>
+                            <mat-option *ngFor="let model of options.model;trackBy: trackByFn" [value]="model.value">
+                                {{model.label}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="vehicleForm.controls.modelId.hasError('required')">
+                            {{ 'Required.Model' | translate }}</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'MakeYear' | translate }}</mat-label>
+                        <mat-select formControlName="makeYear" required>
+                            <mat-option *ngFor="let year of options.regYear;trackBy: trackByFn" [value]="year.value">
+                                {{year.label}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="vehicleForm.controls.makeYear.hasError('required')">
+                            {{ 'Required.MakeYear' | translate }}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'Trim' | translate }}</mat-label>
+                        <input matInput formControlName="trim" required>
+                        <mat-error *ngIf="vehicleForm.controls.trim.hasError('required')">
+                            {{ 'Required.Trim' | translate }}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 col-sm-6 ">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'VehicleUsageLabel' | translate }}</mat-label>
+                        <mat-select formControlName="usage" required>
+                            <mat-option *ngFor="let usage of options.usageType;trackBy: trackByFn"
+                                [value]="usage.value">
+                                {{usage.label}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="vehicleForm.controls.usage.hasError('required')">
+                            {{ 'Required.UsageType' | translate }}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 col-sm-6 ">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Fuel Type</mat-label>
+                        <mat-select formControlName="fuelType"  required >
+                            <mat-option  *ngFor="let fuelType of options.fuelType;trackBy: trackByFn"
+                            [value]="fuelType.value" >
+                            {{fuelType.label}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="vehicleForm.controls.fuelType.hasError('required')">
+                            {{ 'Required.FuelType' | translate }}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 col-sm-6" *ngIf="productId === '105'">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'RepairType' | translate }}</mat-label>
+                        <mat-select formControlName="repairType" required>
+                            <mat-option *ngFor="let repairType of options.repairType;trackBy: trackByFn"
+                                [value]="repairType.value">
+                                {{repairType.label}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="vehicleForm.controls.repairType.hasError('required')">
+                            {{ 'Required.RepairType' | translate }}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'NoOfPassengersInclDriver' | translate }}</mat-label>
+                        <input matInput placeholder="{{ 'PlaceHolder.NoOfPassengers' | translate }}"
+                            formControlName="noOfPassengers" required NumbersOnly maxlength="2">
+                        <mat-error *ngIf="vehicleForm.controls.noOfPassengers.hasError('required')">
+                            {{ 'Required.NoOfPassengers' | translate }}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'RegisteredAt' | translate }}</mat-label>
+                        <mat-select formControlName="registeredAt" required
+                            (selectionChange)="registeredAtChange($event.value)">
+                            <mat-option
+                                *ngFor="let registeredAt of options.registeredAt | orderBy:'label';trackBy: trackByFn"
+                                [value]="registeredAt.value">
+                                {{registeredAt.label}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="vehicleForm.controls.registeredAt.hasError('required')">
+                            {{ 'Required.RegisteredAt' | translate }}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{'RegistrationNo'| translate }}</mat-label>
+                    <input matInput placeholder="{{'PlaceHolder.RegistrationNo'| translate }}"
+                        NumbersOnly [required]="RegistrationNoRequired" formControlName="registerNumber"
+                        maxlength="5">
+                    <mat-error
+                        *ngIf="vehicleForm.controls.registerNumber.hasError('required')">
+                        {{'Required.RegistrationNo'| translate }}
+                    </mat-error>
+                    <mat-error *ngIf="vehicleForm.controls.registerNumber.hasError('pattern')">
+                        {{ 'NumberOnly' | translate }}
+                    </mat-error>
+                </mat-form-field>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'TcNo' | translate }}</mat-label>
+                        <input matInput placeholder="{{ 'PlaceHolder.TcNo' | translate }}"
+                            formControlName="tcFileNumber" required NumbersOnly [maxlength]="tcNoLength"
+                            (focus)="checkTCNumber()">
+                        <mat-error *ngIf="vehicleForm.controls.tcFileNumber.hasError('required')">
+                            {{ 'Required.TcNo' | translate }}
+                        </mat-error>
+                        <mat-error *ngIf="vehicleForm.controls.tcFileNumber.hasError('pattern')">
+                            {{ 'NumberOnly' | translate }}
+                        </mat-error>
+                        <mat-error
+                            *ngIf="vehicleForm.controls.tcFileNumber.hasError('minlength') || vehicleForm.controls.tcFileNumber.hasError('maxlength')">
+                            {{ 'Invalid.TcNo' | translate }} {{tcNoLength}} {{'Invalid.Digits' | translate}}
+                        </mat-error>
+                        <mat-hint class="fbold">{{'TcNoHints' | translate}}</mat-hint>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'RegistrationType' | translate }}</mat-label>
+                        <mat-select formControlName="regStatus" required
+                            (selectionChange)="regTypeChange($event.value)">
+                            <mat-option *ngFor="let regStatus of options.regStatus;trackBy: trackByFn"
+                                [value]="regStatus.value">
+                                {{regStatus.label}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="vehicleForm.controls.regStatus.hasError('required')">
+                            {{ 'Required.RegistrationType' | translate }}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 col-sm-6" *ngIf="vehicleForm.value.regStatus == '03'">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'RegisteredDate' | translate }}</mat-label>
+                        <input matInput [owlDateTime]="registeredDate" [owlDateTimeTrigger]="registeredDate"
+                            placeholder="{{ 'PlaceHolder.RegisteredDate' | translate }}"
+                            formControlName="registeredDate" [min]="minRegisteredDate" [max]="maxRegisteredDate"
+                            required AutoDateFormat />
+                        <owl-date-time [pickerType]="'calendar'" [startView]="'multi-years'" #registeredDate>
+                        </owl-date-time>
+                        <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="registeredDate">
+                            date_range</mat-icon>
+                        <mat-error *ngIf="vehicleForm.controls.registeredDate.hasError('owlDateTimeParse')">
+                            {{ 'InvalidDate' | translate }}
+                        </mat-error>
+                        <mat-error *ngIf="vehicleForm.controls.registeredDate.hasError('required')">
+                            {{ 'Required.RegisteredDate' | translate }}
+                        </mat-error>
+                        <mat-error *ngIf="vehicleForm.controls.registeredDate.hasError('owlDateTimeMin')">
+                            {{ 'Invalid.MinFirstRegisteredDate' | translate }}
+                        </mat-error>
+                        <mat-error *ngIf="vehicleForm.controls.registeredDate.hasError('owlDateTimeMax')">
+                            {{ 'Invalid.MaxFirstRegisteredDate' | translate }}
+                        </mat-error>
+                        <mat-error *ngIf="vehicleForm.controls.registeredDate.hasError('futureDate')">
+                            {{ 'Invalid.MaxFirstRegisteredDate' | translate }}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <!-- <div class="col-md-4 col-sm-6" *ngIf="vehicleForm.value.regStatus == '03'">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'PreviousPolicyNo' | translate }}</mat-label>
+                        <input matInput placeholder="{{ 'PlaceHolder.PreviousPolicyNo' | translate }}" formControlName="prevPolicyNo" required/>
+                        <mat-error *ngIf="vehicleForm.controls.prevPolicyNo.hasError('required')">
+                            {{ 'Required.PreviousPolicyNo' | translate }}
+                        </mat-error>
+                    </mat-form-field>
+                </div> -->
+
+                <div class="col-md-4 col-sm-6" *ngIf="vehicleForm.value.regStatus == '03'">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{'PrevPolExpiryDate'| translate }}</mat-label>
+                        <input matInput [owlDateTime]="expDate" [owlDateTimeTrigger]="expDate"
+                            placeholder="{{ 'PlaceHolder.PrevPolExpiryDate' | translate }}"
+                            formControlName="prevPolicyExpDate" [min]="currentYear" required AutoDateFormat />
+                        <owl-date-time [pickerType]="'calendar'" [startView]="'multi-years'" #expDate></owl-date-time>
+                        <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="expDate">
+                            date_range</mat-icon>
+                        <mat-error *ngIf="vehicleForm.controls.prevPolicyExpDate.hasError('owlDateTimeParse')">
+                            {{ 'InvalidDate' | translate }}
+                        </mat-error>
+                        <mat-error *ngIf="vehicleForm.controls.prevPolicyExpDate.hasError('required')">
+                            {{'Required.PrevPolExpiryDate'| translate }}
+                        </mat-error>
+                        <mat-error *ngIf="vehicleForm.controls.prevPolicyExpDate.hasError('younger')">
+                            {{ 'Invalid.PolicyExpDate' | translate }}
+                        </mat-error>
+                        <mat-error *ngIf="vehicleForm.controls.prevPolicyExpDate.hasError('moreThan60Days')">
+                            {{ invalidPolicyExpDateMorethan60 }}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'NCDLabel' | translate }}</mat-label>
+                        <mat-select formControlName="ncdYears">
+                            <mat-option *ngFor="let type of options.ncdYears;trackBy: trackByFn" [value]="type.value">
+                                {{type.label}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'LicenseIssuedDate' | translate }}</mat-label>
+                        <input matInput [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1"
+                            placeholder="{{ 'PlaceHolder.LicenseIssueDate' | translate }}"
+                            formControlName="licenseIssueDate" required [min]="minIssueDate" [max]="today"
+                            AutoDateFormat />
+                        <owl-date-time [pickerType]="'calendar'" [startView]="'multi-years'" #dt1></owl-date-time>
+                        <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="dt1">date_range</mat-icon>
+                        <mat-error *ngIf="vehicleForm.controls.licenseIssueDate.hasError('owlDateTimeParse')">
+                            {{ 'InvalidDate' | translate }}
+                        </mat-error>
+                        <mat-error *ngIf="vehicleForm.controls.licenseIssueDate.hasError('required')">
+                            {{ 'Required.LicenseIssueDate' | translate }}</mat-error>
+                        <mat-error *ngIf="vehicleForm.controls.licenseIssueDate.hasError('owlDateTimeMin')">
+                            {{ invalidLicenseIssueDate }}</mat-error>
+                        <mat-error *ngIf="vehicleForm.controls.licenseIssueDate.hasError('owlDateTimeMax')">
+                            {{ 'Invalid.FutureDate' | translate }}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="row col-md-12 col-sm-6 align-items-center mt-2" *ngIf="productId === '105'">
+                    <div class="pl-2 col-12 col-xs-12 col-sm-12 col-md-3 vehicle-value-center">
+                        <div class="pl-2 fbold">{{ 'VehicleValueLabel' | translate }} <i
+                                class="fa fa-info-circle fa-1x mt-n4 text-success" #tooltip="matTooltip"
+                                matTooltip="{{ 'VehicleValueTooltip' | translate }}" matTooltipPosition="above"
+                                aria-label="Button that shows a tooltip"></i></div>
+                        <ngx-gauge [type]="gaugeType" [value]="gaugeValue" [min]="minValue" [max]="maxValue"
+                            [size]="100">
+                            <ngx-gauge-value style="font-size: 16px;">
+                                {{ gaugeValue | number}}
+                            </ngx-gauge-value>
+                        </ngx-gauge>
+                    </div>
+                    <div class="row pl-4 col-12 col-xs-12 col-sm-12 col-md-3 d-flex justify-content-center">
+                        <div>
+                            <i class="fa fa-minus mx-2" #tooltip="matTooltip"
+                                matTooltip=" {{ 'ToDecreaseVehicleValue' | translate }}"
+                                aria-label="Button that displays a tooltip when focused or hovered over"
+                                aria-hidden="true" (click)="changeVehicleValue('minus')" style="color: #26715e;"></i>
+                        </div>
+                        <div>
+                            <input type="range" [min]="minValue" [max]="maxValue" formControlName="vehicleValue"
+                                [value]="vehicleValue" step="100" class="slider" (change)="gaugeChange()">
+                        </div>
+                        <div>
+                            <i class="fa fa-plus mx-2" #tooltip="matTooltip"
+                                matTooltip="{{ 'ToIncreaseVehicleValue' | translate }}"
+                                aria-label="Button that displays a tooltip when focused or hovered over"
+                                aria-hidden="true" (click)="changeVehicleValue('add')" style="color: #26715e;"></i>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- Insured Section -->
+        <div class="row mx-2 my-2">
+
+            <div class="zero-pad col-md-5 col-sm-4 col-0">
+                <hr class="horizontal-line" />
+            </div>
+            <div class="fwhite   comp-header col-md-2 col-sm-4 col-12">
+                <label class="label-pad f12 fw900">{{ 'InsuredInformation' | translate }}</label>
+            </div>
+            <div class="zero-pad col-md-5 col-sm-4 col-0">
+                <hr class="horizontal-line" />
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <form id="form1" [formGroup]="insuredForm" class="row col-md-10 col-sm-12 m-0 p-0" focusInvalidInput
+                autocomplete="off">
+                <div class="col-md-6 col-sm-6">
+                    <div class="row ">
+                        <mat-form-field class="col-lg-3 col-md-4 col-sm-4 col-xs-3 col-4 pr-1" style="width: 71px;"
+                            appearance="outline">
+                            <mat-label>{{'Prefix' | translate}}</mat-label>
+                            <mat-select formControlName="prefix">
+                                <mat-option *ngFor="let prefix of options.prefix;trackBy: trackByFn"
+                                    [value]="prefix.value">
+                                    {{ prefix.label}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="insuredForm.controls.prefix.hasError('required')">
+                                {{ 'Required.Prefix' | translate }}
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col-lg-9 col-md-8 col-sm-8 col-xs-9 col-8 pl-0" appearance="outline">
+                            <mat-label>{{ 'InsuredNameLabel' | translate }}</mat-label>
+                            <input matInput placeholder="{{ 'PlaceHolder.InsuredName' | translate }}"
+                                formControlName="fullName" required AlphabetOnly>
+                            <mat-error *ngIf="insuredForm.controls.fullName.hasError('required')">
+                                {{ 'Required.InsuredName' | translate }}
+                            </mat-error>
+                            <mat-error *ngIf="insuredForm.controls.fullName.hasError('pattern')">
+                                {{ 'Required.InsuredNameAlphabets' | translate }}
+                            </mat-error>
+                            <mat-hint class="fbold">{{'InsuredNameHint' | translate}}</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'Dob' | translate }}</mat-label>
+                        <input matInput [owlDateTime]="dobdp" [owlDateTimeTrigger]="dobdp"
+                            placeholder="{{ 'PlaceHolder.Dob' | translate }}" formControlName="dob" required
+                            [max]="dobVDate" [min]="dobMinVDate" AutoDateFormat>
+                        <owl-date-time [pickerType]="'calendar'" [startView]="'multi-years'" #dobdp></owl-date-time>
+                        <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="dobdp">date_range</mat-icon>
+                        <mat-error *ngIf="insuredForm.controls.dob.hasError('owlDateTimeParse')">
+                            {{ 'InvalidDate' | translate }}
+                        </mat-error>
+                        <mat-error *ngIf="insuredForm.controls.dob.hasError('required')">
+                            {{ 'Required.Dob' | translate }}
+                        </mat-error>
+                        <mat-error *ngIf="insuredForm.controls.dob.hasError('owlDateTimeMax')">
+                            {{ requiredDobFormat }}
+                        </mat-error>
+                        <mat-error *ngIf="insuredForm.controls.dob.hasError('owlDateTimeMin')">
+                            {{ 'Required.DobFormatMin' | translate }}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3 col-sm-6">
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{'Nationality' |translate }}</mat-label>
+                        <input type="text" matInput formControlName="nationality" [matAutocomplete]="nationalityField"
+                            required (focusout)="nationalityFocusOut($event)">
+                        <mat-error *ngIf="formCtrls.nationality.errors && formCtrls.nationality.errors.required">
+                            {{'Required.Nationality' | translate }}
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-autocomplete #nationalityField="matAutocomplete"
+                        (optionSelected)="dropDownSelected($event, 'nationality')">
+                        <mat-option *ngFor="let nationality of filteredNationality | async" [value]="nationality.label">
+                            {{nationality.label}}</mat-option>
+                    </mat-autocomplete>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Navigation Section -->
+    <div class="row d-flex justify-content-center mb-4">
+        <div style="padding-left: 15px;padding-right: 15px;" class="col-md-10 col-sm-12 m-0">
+            <div class="d-flex justify-content-between">
+                <button (click)="goBack()" class=" pr-3 btn button btn-default bggreen fwhite">
+                    <i class="fa fa-arrow-left" *ngIf="language === 'en'"></i>
+                    <i class="fa fa-arrow-right" *ngIf="language === 'ar'"></i>
+                    {{ 'Back' | translate }} </button>
+                <button [disabled]="enableContinue" class="pr-3 btn button btn-default bggreen fwhite"
+                    (click)="getPlans()">
+                    {{ 'ContinueButton' | translate }}
+                    <i class="fa fa-arrow-right" *ngIf="language === 'en'"></i>
+                    <i class="fa fa-arrow-left" *ngIf="language === 'ar'"></i>
+
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

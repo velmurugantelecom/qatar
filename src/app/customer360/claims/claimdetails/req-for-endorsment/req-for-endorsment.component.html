@@ -1,0 +1,157 @@
+<ul class="breadcrumb my-auto">
+    <li>
+        <a routerLink="/User/dashboard">
+            <mat-icon>
+                home
+            </mat-icon>
+
+        </a>
+    </li>
+    <li><a class="custom-cursor" (click)="policyPage()">{{ 'PolicyDetails' | translate }}</a></li>
+    <li><a class="custom-cursor" (click)="customer360()">{{navParams.policyNo}}</a></li>
+    <li>{{ 'ReqForEndor' | translate }}</li>
+</ul>
+
+
+<app-claimdetails></app-claimdetails>
+<form [formGroup]="endorsmentreq" focusInvalidInput>
+    <mat-card class="m-5" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
+        <p><strong >{{ 'PleaseFillEndorsReq' | translate }}</strong></p>
+        <hr>
+        <div class="row">
+            <div class="col-md-12 col-12">
+
+                <div class="row p-0">
+
+                    <div class="col-md-6 col-12">
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{ 'ReqForLabel' | translate }}</mat-label>
+                            <mat-select (selectionChange)="getsubtype($event)" formControlName="type" required>
+                                <mat-option *ngFor="let opt of options.endorsmentType" [value]="opt.endorsementSubTypeDec">
+                                    {{ opt.endorsementSubTypeDec }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="endorsmentreq.get('type').invalid">{{ 'Required.ReqFor' | translate }}</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{ 'EndorEffectiveDate' | translate }}</mat-label>
+                            <input  matInput placeholder="{{ 'PlaceHolder.EndorsementEffectiveDate' | translate }}" formControlName="effectiveDate" required [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" [min]="minEffectiveDate" [max]="maxEffectiveDate" AutoDateFormat>
+                            <owl-date-time [pickerType]="'calendar'" [startView]="'multi-years'" #dt1></owl-date-time>
+                            <mat-icon class="custom-cursor" matSuffix [owlDateTimeTrigger]="dt1">date_range</mat-icon>
+                            <mat-error *ngIf="endorsmentreq.controls.effectiveDate.hasError('owlDateTimeParse')">
+                                {{ 'InvalidDate' | translate }}
+                            </mat-error>
+                             <mat-error *ngIf="endorsmentreq.controls.effectiveDate.hasError('required')">{{ 'Required.EffectiveDate' | translate }}
+                            </mat-error>
+                            <mat-error *ngIf="endorsmentreq.controls.effectiveDate.hasError('owlDateTimeMin')">
+                                {{ 'Invalid.MinEffectiveDate' | translate }}
+                            </mat-error>
+                            <mat-error *ngIf=" endorsmentreq.controls.effectiveDate.hasError('owlDateTimeMax') ">
+                                {{ 'Invalid.EndorseMaxEffectiveDate' | translate }}
+                            </mat-error>
+                        </mat-form-field>
+
+                    </div>
+
+                    <!-- <div class="col-md-6 col-12">
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{ 'ChangeTypeLabel' | translate }}</mat-label>
+                            <mat-select formControlName="subType" required>
+                                <mat-option *ngFor="let opt of options.endorsmentSubType" [value]="opt.endorsementSubTypeId">
+                                    {{ opt.endorsementSubTypeDec }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="endorsmentreq.get('subType').invalid">{{ 'Required.ChangeType' | translate }}
+                            </mat-error>
+                        </mat-form-field>
+
+                    </div> -->
+                </div>
+
+                <div class="row p-0">
+                    
+                    <div class="col-md-12 col-12">
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{ 'ChangeReasonLabel' | translate }}</mat-label>
+                            <mat-select formControlName="reason" required>
+                                <mat-option *ngFor="let opt of options.reasonForChange" [value]="opt.value">
+                                    {{ opt.label }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="endorsmentreq.get('reason').invalid">{{ 'Required.ChangeReason' | translate }}
+                            </mat-error>
+                        </mat-form-field>
+
+
+                    </div>
+                </div>
+
+
+                <div class="col-md-12 col-12 p-0">
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'DescLabel' | translate }}</mat-label>
+                        <textarea matInput rows="5" formControlName="remarks"></textarea>
+                        <mat-error *ngIf="endorsmentreq.get('remarks').invalid">{{ 'Required.Desc' | translate }}</mat-error>
+                    </mat-form-field>
+                </div>
+
+
+                <div class="row p-0">
+
+                    <div class="row col-md-6 col-12">
+                        <div class="col-md-4 col-12" *ngIf ="language == 'en'">
+                            <mat-form-field appearance="outline">
+                                <mat-select formControlName="altMobileCode">
+                                    <mat-option *ngFor="let code of options.mobileCode" [value]="code.value">
+                                        {{ code.label}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-8 col-12">
+                            <mat-form-field appearance="outline">
+                                <mat-label>{{ 'AltMobileNo' | translate }}</mat-label>
+                                <input matInput formControlName="altMobileNbr" >
+                                <mat-error *ngIf="endorsmentreq.get('altMobileNbr').invalid">
+                                    {{ 'Required.AltMobNoReq' | translate }}</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4 col-12" *ngIf ="language == 'ar'">
+                            <mat-form-field appearance="outline">
+                                <mat-select formControlName="altMobileCode">
+                                    <mat-option *ngFor="let code of options.mobileCode" [value]="code.value">
+                                        {{ code.label}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-12 p-0 ml-3">
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{ 'AltEmailId' | translate }}</mat-label>
+                            <input matInput formControlName="altMailId">
+                            <mat-error *ngIf="endorsmentreq.get('altMailId').invalid">{{ 'Required.AltEmailIdReq' | translate }}</mat-error>
+
+                        </mat-form-field>
+
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </mat-card>
+
+    <div class="d-flex justify-content-end mr-5">
+        <button type="submit" class="searchBtn m-2" (click)="onsubmit()">{{ 'Submit' | translate }}</button>
+        <button (click)="customer360()" class="searchBtn m-2">{{ 'Cancel' | translate }}</button>
+
+    </div>
+</form>

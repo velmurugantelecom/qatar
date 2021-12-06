@@ -1,0 +1,124 @@
+//@import url("https://fonts.googleapis.com/css?family=Poppins:300,400,500");
+th,
+tr,
+td {
+    border-bottom: 1px solid #f4f3f8;
+}
+
+.Tr {
+    border: 1px solid white;
+}
+
+.Tr td {
+    border: 1px solid white;
+}
+
+.table thead tr {
+    border: 10px solid white;
+}
+
+table {
+    width: 100%;
+}
+
+.tab-head {
+    background-color: #f1f1f1;
+    // font-size:14px;
+}
+
+.hyperlink-click {
+    color: blue;
+    cursor: pointer;
+}
+
+.t-header {
+    background-color: #f4f3f8 !important;
+    vertical-align: middle;
+    font-weight: 300;
+    // font-size: 15px;
+}
+
+// td.mat-cell:first-of-type {
+//     padding-left: 1.5rem;
+// }
+td.mat-cell {
+    padding: 0.75rem 0;
+    // font-size: 14px;
+}
+
+tr:nth-child(2n) {
+    background-color: #f8f8f8;
+}
+
+.Active {
+    color: #fff;
+    background: #007759;
+    font-weight: 500;
+    font-size: 15px;
+    padding: 5px;
+    border-radius: 25px;
+}
+
+.BadgeSpan {
+    cursor: pointer;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+::ng-deep .mat-paginator-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-height: 56px;
+    padding: 0px !important;
+    flex-wrap: wrap-reverse;
+    width: 100%;
+}
+
+.doc-card {
+    width: 300px;
+    height: 100px;
+}
+
+.card-label {
+    opacity: 0.8;
+    font-size: 14px;
+}
+
+.card-value {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+::ng-deep .mat-card {
+    transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1);
+    display: block;
+    position: relative;
+    padding: 14px !important;
+    border-radius: 4px;
+}
+
+@media only screen and (max-width: 400px) {
+    .card-label {
+        opacity: 0.8;
+        font-size: 12px;
+    }
+    .card-value {
+        font-size: 12px;
+        font-weight: 400;
+    }
+}
+
+@media only screen and (max-width: 765px) {
+    .doc-card {
+        width: 95%;
+        height: 100px;
+    }
+}
+
+@media only screen and (min-width: 766px) {
+    .doc-card {
+        width: 90%;
+        height: 100px;
+    }
+}

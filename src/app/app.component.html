@@ -1,0 +1,44 @@
+<ngx-spinner>
+    <p *ngIf="pageLoaderContent=='MotorPageLoaderContent'" class="loader-content">{{ 'QuoteLoaderContent' | translate }} </p>
+    <p *ngIf="pageLoaderContent=='PaymentPageLoaderContent'" class="loader-content">{{ 'PaymentLoaderContent' | translate }} </p>
+    <p *ngIf="pageLoaderContent=='SuccessPageLoaderContent'" class="loader-content">{{ 'SuccessLoaderContent' | translate }} </p>
+</ngx-spinner>
+
+<app-header (languageInfoEmitter)="bodyStyleChange($event)"></app-header>
+<div class="viewport-height" [ngClass]="{'viewport-height': isHeaderVisible===true, 'viewport-height-2': isHeaderVisible===false}">
+    <router-outlet></router-outlet>
+</div>
+<!-- Footer Section -->
+<!-- <div class="d-flex" class="footer">
+    <div class="d-flex justify-content-between">
+        <div class="col-12 col-sm-6 ml-1">
+            Copyright &copy; AFNIC | Powered by Beyontec
+        </div>
+        <div class="col-12 col-sm-6  mr-1">
+            CALL 800 AFNIC or email us to : callcenter@fujinsco.ae
+        </div>
+    </div>
+</div> -->
+<!-- Footer Section -->
+<div class="d-flex" class="footer">
+    <div class="row p-0 m-0 justify-content-between" [ngClass]="{entextalign :language=='en',artextalign :language=='ar'}">
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 col-12 small-txt left-align">
+            {{ 'Copyright' | translate }} &copy; {{ 'PoweredByBeyontec' | translate }}
+        </div>
+        <div class="center-align col-lg-5 col-md-12 col-sm-12 col-xs-12 col-12 small-txt">
+            {{'FooterContentCenter' | translate}} {{'FooterCenterContentMail' | translate}}
+            <!-- <bdo dir="ltr">
+            {{ 'FooterCenter' | translate }} {{'Eight' | translate}} {{'AF' | translate}} {{'Pnumber' | translate}}
+            <bdo dir="rtl" *ngIf="iconDir === 'ar'">
+                {{ 'wee' | translate }} 
+                </bdo>
+                <bdo *ngIf="iconDir === 'en'">
+                    {{ 'wee' | translate }} 
+                    </bdo>{{ 'mailId12' | translate}}
+            </bdo> -->
+        </div>
+        <div class="right-align col-lg-4 col-md-12 col-sm-12 col-xs-12 col-12 small-txt">
+             {{ 'FooterContent' | translate }}
+        </div>
+    </div>
+</div>
